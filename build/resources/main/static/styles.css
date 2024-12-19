@@ -1,0 +1,53 @@
+.bar {
+    position: absolute;
+    top: 10px;          /* Aligns the bar to the top */
+    left: 50%; /* Centers the element horizontally */
+    width: 100%;
+    transform: translateX(-50%); /* Offsets the element by half its width for proper centering */
+    padding: 20px 40px;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 20pt;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #223f5e;
+    border-radius: 25px;
+
+
+}
+.bar nav a{
+    position: relative;
+    padding: 90px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.bar nav a:hover {
+    text-decoration: none;
+    color: #07539e;
+
+}
+
+.weather_board {
+    position: relative;
+    width: 80%;
+    font-size: 15pt;
+    color: white;
+    text-align: center;
+    background-color: #223f5e;
+    border-radius: 25px;
+
+}
+
+.weather_sign {
+    position: relative;
+    width: 40%;
+    padding: 20px 40px;
+    font-size: 20pt;
+    color: white;
+    align-items: center;
+    text-align: center;
+    background-color: #223f5e;
+    border-radius: 25px;
+}

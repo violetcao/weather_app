@@ -1,3 +1,150 @@
+body {
+    margin: 0;
+    color: white; /* Optional: Default text color */
+    font-family: "Roboto Condensed", sans-serif;
+    background-color: #011a33;
+    width: 90%;
+    transform: translateX(6%);
+}
+
+.container {
+    display: inline-flex;
+    justify-content: center; /* Centers the items horizontally */
+    align-items: start;
+    column-gap: 60px;
+    padding-top: 100px;
+    width: 100%;
+    border-radius: 25px;
+
+}
+
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 20px;
+    border-radius: 25px;
+    position: relative;
+
+}
+
+.weather_entry {
+    position: relative;
+    padding: 25px 50px 35px 100px;
+    text-align: start;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather_entry::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;  /* Position at the bottom */
+    left: 5%;  /* Position it a little from the left */
+    width: 80%;  /* Make it shorter */
+    height: 1px;  /* Set the height of the line */
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.66) 50%, rgba(255, 255, 255, 0) 100%);
+}
+
+.weather_day, .weather_temperature, .weather_max_min {
+    flex: 1;  /* All items will take up equal space */
+    text-align: left;
+    padding: 5px;
+}
+
+.weather_temperature {
+    font-style: oblique;
+}
+
+.weather_max_min {
+    color: rgba(255, 255, 255, 0.34);
+    font-style: italic;
+}
+
+
+.current_temperature {
+    font-size: 50pt;
+    padding-right:100px;
+}
+
+.current_summary {
+    font-size: 25pt;
+    padding: 10px 10px 10px 10px;
+}
+
+.current_info {
+    font-size: 15pt;
+    padding: 5px 5px 5px 5px;
+
+}
+
+#search_bar {
+    border-radius: 25px;
+    padding: 20px 40px;
+    background-color: #223f5e;
+    font-size: 20px;
+    color: #070000; /* Text color inside the input */
+    width: 90%;
+    top:0;
+}
+
+#search_bar:focus {
+    border-color: #000c19; /* Change border color on focus */
+}
+
+#search-button {
+    width:20%;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    color: #0b1926;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 10px;
+    transition: background-color 0.3s;
+}
+
+#search-button:hover {
+    background-color: #223f5e;
+}
+
+#search-button:active {
+    background-color: #010e04;
+}
+
+#search_input {
+    width:70%;
+    padding: 7px 15px;
+    border-radius: 25px;
+    font-size:20px;
+    background-color: #ffffff;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+.image_temperature_container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding-bottom: 50px;
+}
+
+.image_temperature_container::after {
+    content: '';
+    position: absolute;
+    bottom: 30px;  /* Position at the bottom */
+    left: 2%;  /* Position it a little from the left */
+    width: 100%;  /* Make it shorter */
+    height: 1px;  /* Set the height of the line */
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.66) 50%, rgba(255, 255, 255, 0) 100%);
+}
+
 .bar {
     position: absolute;
     top: 10px;          /* Aligns the bar to the top */
@@ -13,7 +160,6 @@
     text-align: center;
     background-color: #223f5e;
     border-radius: 25px;
-
 
 }
 .bar nav a{
@@ -41,13 +187,66 @@
 }
 
 .weather_sign {
-    position: relative;
-    width: 40%;
+    display: flex;
     padding: 20px 40px;
+    width: 90%;
     font-size: 20pt;
     color: white;
-    align-items: center;
-    text-align: center;
     background-color: #223f5e;
     border-radius: 25px;
+    flex-direction: column;
+
+}
+
+
+.suggestion_container {
+    position: absolute;
+    top: 14.5%;
+    left: 40px;
+    height: 87%;
+    width:70%;
+    overflow: scroll;
+
+}
+
+.suggestion_square {
+    position: relative;
+    border-radius: 25px;
+    background-color: #223f5e;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 5px 5px #011a33;
+    padding: 10px 10px 10px 10px;
+
+}
+.suggestion_entry {
+    position: relative;
+    font-size: 15pt;
+    color: white;
+    text-align: start;
+    width: 95%;
+    border-radius: 25px;
+    padding: 10px 10px 22px;
+
+
+}
+
+.suggestion_entry::after {
+    content: '';
+    position: absolute;
+    justify-content: center;
+    bottom: 5px;
+    left: 5px;  /* Position it a little from the left */
+    width: 95%;  /* Make it shorter */
+    height: 1px;  /* Set the height of the line */
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+
+}
+
+.suggestion_entry:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+    border-radius: 5px;
+    cursor: pointer; /* Make it look clickable */
+    transition: background-color 0.1s ease, color 0.1s ease; /* Smooth effect */
+
 }

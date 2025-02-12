@@ -1,108 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="/styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-<style>
-    body {
-        margin: 0;
-        color: white; /* Optional: Default text color */
-        font-family: "Roboto Condensed", sans-serif;
-        background-color: #011a33;
-        width: 90%;
-        transform: translateX(6%);
-    }
-
-    .container {
-        display: inline-flex;
-        justify-content: center; /* Centers the items horizontally */
-        align-items: center;
-        column-gap: 60px;
-        padding-top: 100px;
-        font-family: "Roboto Condensed", sans-serif;
-        width: 100%;
-        border-radius: 25px;
-
-    }
-
-    .weather_entry {
-        position: relative;
-        padding: 25px 50px 35px 100px;
-        text-align: start;
-        width: 95%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .weather_entry::after {
-        content: '';
-        position: absolute;
-        bottom: 15px;  /* Position at the bottom */
-        left: 5%;  /* Position it a little from the left */
-        width: 80%;  /* Make it shorter */
-        height: 1px;  /* Set the height of the line */
-        background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.66) 50%, rgba(255, 255, 255, 0) 100%);
-    }
-
-    .weather_day, .weather_temperature, .weather_max_min {
-        flex: 1;  /* All items will take up equal space */
-        text-align: left;
-        padding: 5px;
-    }
-
-    .weather_temperature {
-        font-style: oblique;
-    }
-
-    .weather_max_min {
-        color: rgba(255, 255, 255, 0.34);
-        font-style: italic;
-    }
-
-</style>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles.css?v=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Java Website</title>
-
 </head>
+
     <body>
          <div class="bar">
              <nav>
-                 <a href="https://www.example.com">Search City</a>
+                WeatherApp
                  <a href="https://www.example.com">News</a>
                  <a href="https://www.example.com">About Us</a>
                  <a href="https://www.example.com">Contact</a>
              </nav>
          </div>
          <div class="container">
-             <div class="weather_sign">
-                 Current Weather:
+             <div class = "left-container">
 
+                 <div id="search_bar">
+                     <label>
+                         <input type="text" placeholder="Search City" name="search_bar" id="search_input" required>
+                     </label>
+                     <button id="search-button">🔍</button>
+                 </div>
+
+                 <div class="weather_sign">
+                     <span class="current_summary" th:text="${summary}"></span>
+
+                     <div class="image_temperature_container">
+                         <span class="current_temperature" th:text="${current_temperature} + '°'"></span>
+                         <img alt="" th:src="'/icons/set03/big/' + ${current_icon}" width="90" height="90"/>
+                     </div>
+
+                     <span class="current_info" th:text="'Rainfall: ' + ${precipitation.get('total')} + 'mm'"></span>
+                     <span class="current_info" th:text="'Wind speed: ' + ${wind.get('speed')} + 'kmph'"></span>
+                     <span class="current_info" th:text="'Cloud cover: ' + ${cloud_cover} + 'mb'"></span>
+
+                 </div>
+                 <div class="suggestion_container" id="suggestion_container">
+                     <div class="suggestion_square" id="suggestion_square"></div>
+                 </div>
              </div>
 
              <div class="weather_board">
 
                  <h1 th:text="${place_name + ', ' + country}">City Temperature</h1>
-                     <div th:each="day : ${hashmap}">
+                     <div th:each="day : ${weather_week}">
                          <div class="weather_entry">
                              <span class="weather_day" th:text="${day.day_of_week}"></span>
                              <span class="weather_temperature" th:text="${day.temperature}"></span>
                              <span class="weather_max_min" th:text="${day.temperature_max + '/' + day.temperature_min}"></span>
                          </div>
-
-
                      </div>
-
-
-
-
-
              </div>
-
          </div>
-
-
     </body>
 </html>
+
+
+<script>
+    // Global variables
+    const search_input = document.getElementById("search_input");
+    const suggestion_box = document.getElementById("suggestion_square");
+    const suggestion_container = document.getElementById("suggestion_container");
+    suggestion_box.style.display = 'none';
+
+    let offset = 0;
+    const limit = 7;
+
+    searchLogic();
+
+
+    // For managing user inputs in searchbar
+    function searchLogic() {
+        search_input.addEventListener("input", async (event) => {
+            const user_input = event.target.value.trim();
+            offset=0;
+
+
+            // If user presses outside the input
+            document.addEventListener("click", function(event) {
+                // If the click was not search_input or suggestion_box, then user does not want to search city
+                if (!search_input.contains(event.target) && !suggestion_box.contains(event.target)) {
+                    suggestion_box.style.display = 'none';
+                    search_input.value = "";
+                    offset = 0;
+                }
+
+            });
+
+            // If user_input is none, hide the box
+            if (!user_input){
+                suggestion_box.style.display = 'none';
+                offset = 0;
+                return;
+            }
+
+            // Now send the input to backend
+            await generateSuggestions(user_input, offset);
+            offset += limit;
+
+
+        });
+
+
+        // If user scrolls down
+        suggestion_container.addEventListener("scroll", async () => {
+            if (suggestion_container.scrollTop + suggestion_container.clientHeight >= suggestion_container.scrollHeight - 10) {
+                // Send a signal to generate the next seven set of cities
+                const user_input = search_input.value.trim();
+                await generateSuggestions(user_input, offset);
+                offset += limit;
+            }
+
+        });
+
+
+    }
+
+    // For suggestion generation
+    async function generateSuggestions(user_input, offset) {
+        // Send input to backend
+        try {
+            const response = await fetch("/generate_suggestions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({user_input: user_input,
+                offset: offset})
+            });
+
+
+            if (response.ok) {
+                const data = await response.json();
+
+                if (offset === 0) {
+                    suggestion_box.innerHTML = ""; // Clears old suggestions
+                }
+
+                // Display suggestions if map not empty
+                if (Object.keys(data).length > 0) {
+                    suggestion_box.style.display = 'block';
+                    // Add suggestion entry to html
+                    suggestion_box.innerHTML += Object.entries(data)
+                        .map(([key, value]) =>
+                            `<div class="suggestion_entry" data-key="${key}" onclick="selectSuggestion('${value}', '${key}')">${value}</div>`
+                        ).join('');
+
+                }
+            }
+
+        } catch (error) {
+            console.error("Error fetching suggestions:", error);
+        }
+
+    }
+
+
+    // Select suggestion and send city ID to backend
+    function selectSuggestion(value, key) {
+        search_input.value = value;
+        suggestion_box.style.display = 'none';
+        console.log('Selected:', key);
+
+        // If user then clicks search button
+        document.getElementById("search-button").addEventListener("click", async function(event) {
+            event.preventDefault();
+            offset = 0;
+            await searchCity(key);
+
+        });
+
+
+    }
+
+    // redirecting to another city
+    async function searchCity(value) {
+        try {
+            window.location.href = `http://localhost:8080/?city_id=${encodeURIComponent(value)}`; // Replace with your desired URL
+
+        } catch (error) {
+            console.log("Error")
+            window.location.href = `http://localhost:8080`
+        }
+
+    }
+
+
+</script>

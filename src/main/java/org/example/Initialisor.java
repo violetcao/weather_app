@@ -12,11 +12,11 @@ import java.util.Objects;
 public class Initialisor {
     private Connection conn;
     public Initialisor() {
-        this.conn = connectToDatabase();
+        this.conn = initialiseToDatabase();
         requestListOfPlaceID();
     }
 
-    public Connection connectToDatabase() {
+    public Connection initialiseToDatabase() {
 
         try {
             // Pointing to where the database.db is located

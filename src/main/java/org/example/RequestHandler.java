@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class RequestHandler {
     private final Connection conn;
@@ -59,16 +58,18 @@ public class RequestHandler {
         try {
             URL url = new URL(link);
             // Retrieving contents
-            Scanner sc = new Scanner(url.openStream());
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
             StringBuilder sb = new StringBuilder();
-            while(sc.hasNext()) {
-                sb.append(sc.next());
+            String line;
+            while((line = br.readLine()) != null) {
+                sb.append(line);
             }
+            br.close();
             // Converting buffer to string
             String result = sb.toString();
-            String fixedText = new String(result.getBytes("ISO-8859-1"), "UTF-8");
 
-            return new JSONArray(fixedText);
+
+            return new JSONArray(result);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

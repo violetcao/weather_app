@@ -117,7 +117,7 @@ public class Initialisor {
                 String name = jsonObject.get("name").getAsString();
                 if (name != null) {
                     insertToCity(name, lat, lon, countryCode);
-                    System.out.println(name);
+
                 }
 
             }
@@ -131,6 +131,8 @@ public class Initialisor {
             String query = "INSERT INTO Country (countryName, cca2)" +
                     "VALUES (?, ?)";
             PreparedStatement statement = conn.prepareStatement(query);
+
+
 
             statement.setString(1, countryName);
             statement.setString(2, cca2);
@@ -157,6 +159,7 @@ public class Initialisor {
 
         } catch (SQLException e) {
             System.out.println("An error occurred while inserting city: " + e.getMessage());
+
         }
     }
 

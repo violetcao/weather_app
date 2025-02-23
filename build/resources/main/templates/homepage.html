@@ -19,32 +19,30 @@
              </nav>
          </div>
          <div class="container">
-             <div class = "left-container">
-
-                 <div id="search_bar">
-                     <label>
-                         <input type="text" placeholder="Search City" name="search_bar" id="search_input" required>
-                     </label>
-                     <button id="search-button">🔍</button>
-                 </div>
-
-                 <div class="weather_sign">
-                     <span class="current_summary" th:text="${summary}"></span>
-
-                     <div class="image_temperature_container">
-                         <span class="current_temperature" th:text="${current_temperature} + '°'"></span>
-                         <img alt="" th:src="'/icons/set03/big/' + ${current_icon}" width="90" height="90"/>
-                     </div>
-
-                     <span class="current_info" th:text="'Rainfall: ' + ${precipitation.get('total')} + 'mm'"></span>
-                     <span class="current_info" th:text="'Wind speed: ' + ${wind.get('speed')} + 'kmph'"></span>
-                     <span class="current_info" th:text="'Cloud cover: ' + ${cloud_cover} + 'mb'"></span>
-
-                 </div>
-                 <div class="suggestion_container" id="suggestion_container">
-                     <div class="suggestion_square" id="suggestion_square"></div>
-                 </div>
+             <div id="search_bar">
+                 <label>
+                     <input type="text" placeholder="Search City" name="search_bar" id="search_input" required>
+                 </label>
+                 <button id="search-button">🔍</button>
              </div>
+
+             <div class="weather_sign">
+                 <span class="current_summary" th:text="${summary}"></span>
+
+                 <div class="image_temperature_container">
+                     <span class="current_temperature" th:text="${current_temperature} + '°'"></span>
+                     <img alt="" th:src="'/icons/set03/big/' + ${current_icon}" width="90" height="90"/>
+                 </div>
+
+                 <span class="current_info" th:text="'Rainfall: ' + ${precipitation.get('total')} + 'mm'"></span>
+                 <span class="current_info" th:text="'Wind speed: ' + ${wind.get('speed')} + 'kmph'"></span>
+                 <span class="current_info" th:text="'Cloud cover: ' + ${cloud_cover} + 'mb'"></span>
+
+             </div>
+             <div class="suggestion_container" id="suggestion_container">
+                 <div class="suggestion_square" id="suggestion_square"></div>
+             </div>
+
 
              <div class="weather_board">
 

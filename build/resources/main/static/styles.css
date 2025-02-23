@@ -2,33 +2,28 @@ body {
     margin: 0;
     color: white; /* Optional: Default text color */
     font-family: "Roboto Condensed", sans-serif;
-
-    background-image: url('/static/icons/images/background.jpg');
+    background-image: url('/icons/images/background.jpg');
+    background-size: cover; /* Makes the image cover the entire screen */
+    background-position: top; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents image repetition */
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
     width: 90%;
     transform: translateX(6%);
 }
 
+
 .container {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     justify-content: center; /* Centers the items horizontally */
     align-items: start;
     column-gap: 60px;
     padding-top: 100px;
     width: 100%;
     border-radius: 25px;
-
+    row-gap: 20px;
 }
 
-
-.left-container {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    gap: 20px;
-    border-radius: 25px;
-    position: relative;
-
-}
 
 .weather_entry {
     position: relative;
@@ -83,13 +78,20 @@ body {
 }
 
 #search_bar {
-    border-radius: 25px;
     padding: 20px 40px;
-    background-color: #223f5e;
     font-size: 20px;
-    color: #070000; /* Text color inside the input */
+    color: #070000;
     width: 90%;
     top:0;
+    background-color: rgba(255, 255, 255, 0.15);
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    column-gap: 10px
+
 }
 
 #search_bar:focus {
@@ -99,29 +101,27 @@ body {
 #search-button {
     width:20%;
     padding: 10px 15px;
-    background-color: #ffffff;
     color: #0b1926;
     border: none;
-    border-radius: 25px;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 18px;
     transition: background-color 0.3s;
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 #search-button:hover {
-    background-color: #223f5e;
+    background-color: #afafb1;
 }
 
 #search-button:active {
-    background-color: #010e04;
+    background-color: #737373;
 }
 
 #search_input {
-    width:70%;
+    background-color: rgba(255, 255, 255, 0.15);
+    width:60%;
     padding: 7px 15px;
-    border-radius: 25px;
     font-size:20px;
-    background-color: #ffffff;
     font-family: "Roboto Condensed", sans-serif;
 }
 
@@ -147,10 +147,11 @@ body {
 }
 
 .bar {
+    background-color: rgba(255, 255, 255, 0.15);
     position: absolute;
     top: 10px;          /* Aligns the bar to the top */
     left: 50%; /* Centers the element horizontally */
-    width: 100%;
+    width: 90%;
     transform: translateX(-50%); /* Offsets the element by half its width for proper centering */
     padding: 20px 40px;
     font-family: "Roboto Condensed", sans-serif;
@@ -159,8 +160,6 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #223f5e;
-    border-radius: 25px;
 
 }
 .bar nav a{
@@ -182,21 +181,24 @@ body {
     font-size: 15pt;
     color: white;
     text-align: center;
-    background-color: #223f5e;
-    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.15);
+    left: 50%;
+    transform: translateX(-50%);
+
 
 }
 
 .weather_sign {
+    position: relative;
     display: flex;
     padding: 20px 40px;
     width: 90%;
     font-size: 20pt;
     color: white;
-    background-color: #223f5e;
-    border-radius: 25px;
     flex-direction: column;
-
+    left: 50%; /* Centers the element horizontally */
+    transform: translateX(-50%); /* Offsets the element by half its width for proper centering */
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 
